@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <h1>My React and Express App!</h1>
+      <Outlet />
     </div>
   );
 }
