@@ -7,7 +7,6 @@ import About from "./Pages/About";
 import Blogs from "./Pages/Blogs";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
-
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 
 
