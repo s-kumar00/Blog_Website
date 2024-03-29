@@ -7,7 +7,9 @@ import About from "./Pages/About";
 import Blogs from "./Pages/Blogs";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
+import Contact from "./Pages/Contact";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+
 
 
 const router = createBrowserRouter([
@@ -29,11 +31,15 @@ const router = createBrowserRouter([
         element: <Blogs />,
       },
       {
-        path: "register",
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/register",
         element: <SignUp />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <SignIn />,
       },
     ],

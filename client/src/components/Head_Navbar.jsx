@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { MdCategory, MdHomeFilled } from "react-icons/md";
 import { TbBrandBlogger } from "react-icons/tb";
-
+import { IoMdContacts } from "react-icons/io";
 const Navbar = ({ containerStyles, toggleMenu }) => {
   return (
     <nav className={`${containerStyles}`}>
@@ -31,6 +31,15 @@ const Navbar = ({ containerStyles, toggleMenu }) => {
       >
         <div className="flex gap-x-2 justify-center items-center">
           <TbBrandBlogger /> Blog
+        </div>
+      </NavLink>
+      <NavLink
+        to={"/contact"}
+        onClick={toggleMenu}
+        className={({ isActive }) => (isActive ? "active_link" : "")}
+      >
+        <div className="flex gap-x-2 justify-center items-center">
+          <IoMdContacts /> Contact
         </div>
       </NavLink>
     </nav>

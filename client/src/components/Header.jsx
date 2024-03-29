@@ -5,12 +5,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 import Head_Navbar from "./Head_Navbar";
 
-
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const toggleMenu = () => setMenuOpened(!menuOpened);
   return (
-    <Navbar className="border-b-2 rounded-sm shadow-sm">
+    <Navbar className="border-b-2 justify-between items-center rounded-sm shadow-sm ">
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -20,14 +19,6 @@ const Header = () => {
         </span>
         Blog
       </Link>
-      <form>
-        <TextInput
-          type="text"
-          placeholder="Search..."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-        />
-      </form>
       <Button className="w-12 h-10 lg:hidden" color="light" pill>
         <AiOutlineSearch />
       </Button>
@@ -37,13 +28,15 @@ const Header = () => {
           <FaMoon />
         </Button>
         <Link to="/login" className="">
-          <Button gradientDuoTone="purpleToBlue">SignUp</Button>
+          <Button gradientDuoTone="purpleToBlue" outline>
+            Login
+          </Button>
         </Link>
         <Navbar.Toggle onClick={toggleMenu} />
       </div>
 
       {/* navbar for mobile and large screen */}
-      <Head_Navbar containerStyles={"hidden md:flex gap-x-5"} />
+      <Head_Navbar containerStyles={"hidden md:flex gap-x-10"} />
       <Head_Navbar
         toggleMenu={toggleMenu}
         containerStyles={`${
@@ -52,6 +45,14 @@ const Header = () => {
             : "fixed flex flex-col z-50 -right-[100%] top-20 gap-y-5 p-5 bg-white rounded-2xl shadow-md w-44 dark:bg-gray-700 transition-all duration-3000"
         }`}
       />
+      <form>
+        <TextInput
+          type="text"
+          placeholder="Search..."
+          rightIcon={AiOutlineSearch}
+          className="hidden lg:inline"
+        />
+      </form>
     </Navbar>
   );
 };
