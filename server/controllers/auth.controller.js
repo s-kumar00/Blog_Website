@@ -1,42 +1,42 @@
 const UserModel = require('../models/user.model');
+const errorHandler = require('../utils/error');
+const bcrypt = require('bcrypt');
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
         const data =await UserModel.findOne({ email });
 
         if(data){
-            res.status(201).json({message: "User already exists", success: false});
+            next(errorHandler(400, "User already exists"));
         }
         else{
             const user = new UserModel({ username, email, password });
+            const hashPassword = await bcrypt.hash(password, 10);
+            user.password = hashPassword;
             await user.save();
             res.status(201).json({message: "User registered successfully",success: true});
         }
     } catch (error) {
-        res.status(500).json({message: error.message, success: false});
+        next(errorHandler(500, error.message));
     }
 }
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const data = await userModel.findOne({email});
+        const data = await UserModel.findOne({email});
         if(!data){
-            return res.status(500).json({message: "User does not exist", success: false});
+            next(errorHandler(400, "User does not exist"));
         }
 
         if(data.password !== password){
-            return res.status(500).json({message: "Password is incorrect", success: false});
+            next(errorHandler(400, "Password is incorrect"));
         }
 
-        const hashPassword = await bcrypt.hash(password, 10);
-        data.password = hashPassword;
-        await data.save();
-        
         res.status(201).json({data, message: "User logged in successfully", success: true});
 
     } catch (error) {
-        res.status(500).json({message: error.message, success: false});
+        next(errorHandler(500, error.message));
     }
 } 
