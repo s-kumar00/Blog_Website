@@ -22,8 +22,8 @@ const start = async () => {
     console.log(error);
   }
 };
-
 start();
+
 
 
 app.get('/', (req, res) => {

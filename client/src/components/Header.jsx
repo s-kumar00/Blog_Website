@@ -41,8 +41,8 @@ const Header = () => {
         toggleMenu={toggleMenu}
         containerStyles={`${
           menuOpened
-            ? "fixed flex flex-col z-50 -right-[-2%] top-14 gap-y-5 p-5 bg-white rounded-2xl shadow-md w-44 dark:bg-gray-700 transition-all duration-3000 lg:hidden"
-            : "fixed flex flex-col z-50 -right-[100%] top-20 gap-y-5 p-5 bg-white rounded-2xl shadow-md w-44 dark:bg-gray-700 transition-all duration-3000"
+            ? "fixed flex z-50 w-full right-[0%] gap-x-2 top-14 gap-y-5 p-5 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000 lg:hidden md:hidden"
+            : "fixed flex z-50 w-full -left-[100%] gap-x-2 top-14 gap-y-5 p-5 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000"
         }`}
       />
       <form>

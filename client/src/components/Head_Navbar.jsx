@@ -11,7 +11,7 @@ const Navbar = ({ containerStyles, toggleMenu }) => {
         onClick={toggleMenu}
         className={({ isActive }) => (isActive ? "active_link" : "")}
       >
-        <div className="flex gap-x-2 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
           <MdHomeFilled /> Home
         </div>
       </NavLink>
@@ -20,7 +20,7 @@ const Navbar = ({ containerStyles, toggleMenu }) => {
         onClick={toggleMenu}
         className={({ isActive }) => (isActive ? "active_link" : "")}
       >
-        <div className="flex gap-x-2 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
           <MdCategory /> About
         </div>
       </NavLink>
@@ -29,7 +29,7 @@ const Navbar = ({ containerStyles, toggleMenu }) => {
         onClick={toggleMenu}
         className={({ isActive }) => (isActive ? "active_link" : "")}
       >
-        <div className="flex gap-x-2 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
           <TbBrandBlogger /> Blog
         </div>
       </NavLink>
