@@ -1,11 +1,12 @@
-const express = require('express');
+const express = require("express");
 const cors = require("cors");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const app = express();
 app.use(cors());
 app.use(express.json());
-require("dotenv").config()
-
+require("dotenv").config();
+const userRouter = require("./router/user.router");
+const authRouter = require("./router/auth.router");
 // let server;
 
 const start = async () => {
@@ -14,7 +15,12 @@ const start = async () => {
       console.log(`Server is running on port ${process.env.PORT}...!`);
     });
 
-    const database_connect = await mongoose.connect(process.env.MONGODB_URI);
+    const database_connect = await mongoose.connect(
+      `${process.env.MONGODB_URI}`,
+      {
+        dbName: "Blog_Website",
+      }
+    );
     if (database_connect) {
       console.log("Database connected successfully...!");
     }
@@ -24,8 +30,9 @@ const start = async () => {
 };
 start();
 
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });

@@ -22,7 +22,6 @@ const Header = () => {
       <Button className="w-12 h-10 lg:hidden" color="light" pill>
         <AiOutlineSearch />
       </Button>
-
       <div className="flex gap-2 md:order-2 gap-x-3">
         <Button className="w-12 h-10" color="light" pill>
           <FaMoon />
