@@ -1,21 +1,28 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toastOptions } from "../utils/utility";
 import { toast } from "react-toastify";
 import { registerRoute } from "../Api/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+  signInEnd,
+} from "../redux/userSlice";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const { loading, errorMessage } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
+  useEffect(() => {
+    dispatch(signInEnd());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,13 +30,12 @@ const SignUp = () => {
       if (handleValidation()) {
         dispatch(signInStart());
         const dataRes = await registerRoute(formData);
-        if (dataRes.data.success === true) {
-          toast.success(dataRes.data.message, toastOptions);
-          navigate("/login");
-          dispatch(signInSuccess(dataRes.data.user));
-        } else {
-          dispatch(signInFailure(dataRes.data.message));
+        if (dataRes.data.success !== true) {
+          return dispatch(signInFailure(dataRes.data.message));
         }
+        toast.success(dataRes.data.message, toastOptions);
+        navigate("/login");
+        dispatch(signInSuccess(dataRes.data.user));
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
@@ -61,7 +67,7 @@ const SignUp = () => {
     }
     return true;
   };
-
+  
   return (
     <div className="h-full mt-5 sm:mt-20">
       <div className="flex pl-5 pr-5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">

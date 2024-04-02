@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 
 function App() {
+
   return (
     <div>
       <Header />
