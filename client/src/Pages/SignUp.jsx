@@ -1,45 +1,80 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import OAuth from "../components/OAuth";
+import { toastOptions } from "../utils/utility";
+import { toast } from "react-toastify";
+import { registerRoute } from "../Api/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, errorMessage } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all fields.");
-    }
     try {
-      setLoading(true);
-      setErrorMessage(null);
-
-      setLoading(false);
+      if (handleValidation()) {
+        dispatch(signInStart());
+        const dataRes = await registerRoute(formData);
+        if (dataRes.data.success === true) {
+          toast.success(dataRes.data.message, toastOptions);
+          navigate("/login");
+          dispatch(signInSuccess(dataRes.data.user));
+        } else {
+          dispatch(signInFailure(dataRes.data.message));
+        }
+      }
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
+
+  const handleValidation = () => {
+    const { username, email, password, confirmPassword } = formData;
+    if (!username || !email || !password || !confirmPassword) {
+      dispatch(signInFailure("Please fill out all fields."));
+    } else if (username.length < 3) {
+      dispatch(signInFailure("Username must be at least 3 characters long"));
+      return false;
+    } else if (password.length < 6) {
+      dispatch(signInFailure("Password must be at least 6 characters long"));
+      return false;
+    } else if (password !== confirmPassword) {
+      dispatch(signInFailure("Passwords do not match"));
+      return false;
+    } else if (!email.includes("@")) {
+      dispatch(signInFailure("Email must be valid"));
+      return false;
+    } else if (password.includes(username)) {
+      dispatch(signInFailure("Password must not contain username"));
+      return false;
+    } else if (password.includes(email)) {
+      dispatch(signInFailure("Password must not contain email"));
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <div className="min-h-screen mt-20">
-      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
+    <div className="h-full mt-5 sm:mt-20">
+      <div className="flex pl-5 pr-5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
         {/* left */}
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
             <span className="px-2 py-1 bg-gradient-to-r rounded-lg text-black">
-              Tech
+              1-Bit
             </span>
             Blog
           </Link>
           <p className="text-sm mt-5">
-            This is a demo project. You can sign up with your email and password
-            or with Google.
+            This is a demo project. Fill up the form to create an account.
           </p>
         </div>
         {/* right */}
@@ -52,6 +87,12 @@ const SignUp = () => {
                 type="text"
                 placeholder="Username"
                 id="username"
+                addon="👤"
+                color={
+                  errorMessage && errorMessage.includes("Username")
+                    ? "failure"
+                    : ""
+                }
                 onChange={handleChange}
               />
             </div>
@@ -61,6 +102,12 @@ const SignUp = () => {
                 type="email"
                 placeholder="name@company.com"
                 id="email"
+                addon="📧"
+                color={
+                  errorMessage && errorMessage.includes("User" || "Email")
+                    ? "failure"
+                    : ""
+                }
                 onChange={handleChange}
               />
             </div>
@@ -70,6 +117,12 @@ const SignUp = () => {
                 type="password"
                 placeholder="Password"
                 id="password"
+                addon="🔒"
+                color={
+                  errorMessage && errorMessage.includes("Password")
+                    ? "failure"
+                    : ""
+                }
                 onChange={handleChange}
               />
             </div>
@@ -77,8 +130,14 @@ const SignUp = () => {
               <Label value="Confirm password" />
               <TextInput
                 type="confirmPassword"
-                placeholder="ConfirmPassword"
-                id="ConfirmPassword"
+                placeholder="confirmPassword"
+                id="confirmPassword"
+                addon="🔒"
+                color={
+                  errorMessage && errorMessage.includes("Password")
+                    ? "failure"
+                    : ""
+                }
                 onChange={handleChange}
               />
             </div>
@@ -99,7 +158,7 @@ const SignUp = () => {
             </Button>
             {/* <OAuth /> */}
           </form>
-          <div className="flex gap-2 text-sm mt-5">
+          <div className="flex gap-2 text-sm mt-5 justify-center">
             <span>Have an account?</span>
             <Link to="/login" className="text-blue-500">
               Sign In

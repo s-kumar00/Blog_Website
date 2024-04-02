@@ -8,15 +8,20 @@ import Blogs from "./Pages/Blogs";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
 import Contact from "./Pages/Contact";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
-
-
+import ForgetPassword from "./Pages/ForgetPassword";
+import NotFoundPage from "./Pages/NotFoundPage.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./redux/store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <div>404 Not Found</div>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",
@@ -42,13 +47,19 @@ const router = createBrowserRouter([
         path: "/login",
         element: <SignIn />,
       },
+      {
+        path:"/forgot-password",
+        element:<ForgetPassword />
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router}>
-    </RouterProvider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <PersistGate persistor={persistor} loading={null}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </PersistGate>
+  </Provider>
 );

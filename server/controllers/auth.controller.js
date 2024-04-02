@@ -1,14 +1,13 @@
 const UserModel = require('../models/user.model');
 const errorHandler = require('../utils/error');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
-        const data =await UserModel.findOne({ email });
-
+        const data = await UserModel.findOne({ email });
         if(data){
-            next(errorHandler(400, "User already exists"));
+            next(errorHandler(201, "User already exists"));
         }
         else{
             const user = new UserModel({ username, email, password });
