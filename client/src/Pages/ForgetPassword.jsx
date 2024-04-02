@@ -7,6 +7,7 @@ import { IoKeyOutline } from "react-icons/io5";
 import { FiExternalLink } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { TextInput, Label } from "flowbite-react";
 import {
   emailRoute,
   otpVerifyRoute,
@@ -192,14 +193,16 @@ const ForgetPassword = () => {
             <form onSubmit={handleSubmit} className="my-5">
               <div className="flex flex-col space-y-5">
                 {step === 1 && (
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    className="font-normal rounded-md p-2 w-full border border-gray-300 focus:ring dark:text-gray-90"
-                    placeholder="Enter email address"
-                  />
+                  <div>
+                    <Label value="Your email" />
+                    <TextInput
+                      type="email"
+                      placeholder="name@company.com"
+                      id="email"
+                      addon="📧"
+                      required
+                    />
+                  </div>
                 )}
                 {step === 2 && (
                   <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
@@ -225,24 +228,22 @@ const ForgetPassword = () => {
                 )}
                 {step >= 3 && (
                   <div>
-                    <div className="mb-4">
-                      <input
+                    <div>
+                      <Label value="Your password" />
+                      <TextInput
                         type="password"
-                        name="password"
-                        id="password"
                         placeholder="Password"
-                        className="font-normal rounded-md p-2 w-full border border-gray-300 focus:ring dark:text-gray-90"
-                        required
+                        id="password"
+                        addon="🔒"
                       />
                     </div>
                     <div>
-                      <input
+                      <Label value="Confirm password" />
+                      <TextInput
                         type="confirmPassword"
-                        name="confirmPassword"
+                        placeholder="confirmPassword"
                         id="confirmPassword"
-                        placeholder="Retype password"
-                        className="font-normal rounded-md p-2 w-full border border-gray-300 focus:ring dark:text-gray-90"
-                        required
+                        addon="🔒"
                       />
                     </div>
                   </div>
