@@ -8,27 +8,44 @@ import {
 } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toastOptions } from "../utils/utility";
+import { toast } from "react-toastify";
+import { loginRoute } from "../Api/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/userSlice";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, errorMessage} = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      return setErrorMessage("Please fill out all fields.");
+    const email = formData.email;
+    const password = formData.password;
+    if (!email || !password) {
+      return dispatch(signInFailure("Please fill out all fields."));
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
-      setLoading(false);
+      dispatch(signInStart());
+      const dataRes = await loginRoute({email, password});
+      if (dataRes.data.success === false) {
+        return dispatch(signInFailure(dataRes.data.message));
+      }
+      toast.success(dataRes.data.message, toastOptions);
+      navigate("/");
+      dispatch(signInSuccess(dataRes.data.user));
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 

@@ -67,7 +67,7 @@ const SignUp = () => {
     }
     return true;
   };
-  
+
   return (
     <div className="h-full mt-5 sm:mt-20">
       <div className="flex pl-5 pr-5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">

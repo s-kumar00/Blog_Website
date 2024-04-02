@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 import Head_Navbar from "./Head_Navbar";
+import Profile from "./Profile";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const toggleMenu = () => setMenuOpened(!menuOpened);
+
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
     <Navbar className="border-b-2 justify-between items-center rounded-sm shadow-sm ">
       <Link
@@ -26,11 +31,15 @@ const Header = () => {
         <Button className="w-12 h-10" color="light" pill>
           <FaMoon />
         </Button>
-        <Link to="/login" className="">
-          <Button gradientDuoTone="purpleToBlue" outline>
-            Login
-          </Button>
-        </Link>
+        {!currentUser ? (
+          <Link to="/login" className="">
+            <Button gradientDuoTone="purpleToBlue" outline>
+              Login
+            </Button>
+          </Link>
+        ) : (
+          <Profile />
+        )}
         <Navbar.Toggle onClick={toggleMenu} />
       </div>
 
