@@ -12,15 +12,11 @@ import { toastOptions } from "../utils/utility";
 import { toast } from "react-toastify";
 import { loginRoute } from "../Api/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
-} from "../redux/userSlice";
+import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const {loading, errorMessage} = useSelector((state) => state.user);
+  const { loading, errorMessage } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,7 +33,7 @@ export default function SignIn() {
     }
     try {
       dispatch(signInStart());
-      const dataRes = await loginRoute({email, password});
+      const dataRes = await loginRoute({ email, password });
       if (dataRes.data.success === false) {
         return dispatch(signInFailure(dataRes.data.message));
       }
@@ -50,7 +46,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="h-full items-center mt-10 sm:mt-40">
+    <div className="h-screen items-center mt-10 sm:mt-40">
       <div className="flex pl-5 pr-5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
         {/* left */}
         <div className="flex-1">

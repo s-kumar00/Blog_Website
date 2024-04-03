@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Navbar, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
+import { FaLightbulb, FaMoon } from "react-icons/fa";
 import Head_Navbar from "./Head_Navbar";
 import Profile from "./Profile";
 import { useSelector } from "react-redux";
