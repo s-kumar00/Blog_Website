@@ -74,9 +74,7 @@ const SignUp = () => {
         {/* left */}
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
-            <span className="px-2 py-1 bg-gradient-to-r rounded-lg text-black">
-              1-Bit
-            </span>
+            <span className="px-2 py-1 bg-gradient-to-r rounded-lg">1-Bit</span>
             Blog
           </Link>
           <p className="text-sm mt-5">

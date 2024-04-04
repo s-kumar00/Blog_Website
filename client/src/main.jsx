@@ -48,18 +48,18 @@ const router = createBrowserRouter([
         element: <SignIn />,
       },
       {
-        path:"/forgot-password",
-        element:<ForgetPassword />
+        path: "/forgot-password",
+        element: <ForgetPassword />,
       },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <PersistGate persistor={persistor} loading={null}>
+  <PersistGate persistor={persistor}>
+    <Provider store={store}>
       <RouterProvider router={router} />
       <ToastContainer />
-    </PersistGate>
-  </Provider>
+    </Provider>
+  </PersistGate>
 );

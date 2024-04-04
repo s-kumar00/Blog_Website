@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Blogs = () => {
-  return (
-    <div>Blogs</div>
-  )
-}
+  return <div className="h-screen">Blogs</div>;
+};
 
-export default Blogs
+export default Blogs;

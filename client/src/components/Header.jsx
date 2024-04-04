@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { Button, Navbar, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaLightbulb, FaMoon } from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
 import Head_Navbar from "./Head_Navbar";
 import Profile from "./Profile";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/themeSlice";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const toggleMenu = () => setMenuOpened(!menuOpened);
+  const [searchOpened, setSearchOpened] = useState(false);
+  const toggleSearch = () => setSearchOpened(!searchOpened);
+  const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -25,11 +30,16 @@ const Header = () => {
         Blog
       </Link>
       <Button className="w-12 h-10 lg:hidden" color="light" pill>
-        <AiOutlineSearch />
+        <AiOutlineSearch onClick={toggleSearch} />
       </Button>
       <div className="flex gap-2 md:order-2 gap-x-3">
-        <Button className="w-12 h-10" color="light" pill>
-          <FaMoon />
+        <Button
+          className="w-12 h-10"
+          color="light"
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === "light" ? <FaMoon /> : <FaSun />}
         </Button>
         {!currentUser ? (
           <Link to="/login" className="">
@@ -58,7 +68,11 @@ const Header = () => {
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
+          className={`${
+            searchOpened
+              ? "fixed flex z-50 w-full right-[0%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000 lg:hidden md:hidden"
+              : "fixed flex z-50 w-full -left-[100%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000"
+          }`}
         />
       </form>
     </Navbar>
