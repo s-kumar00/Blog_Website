@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { signOut } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import userSvg from "../asstes/user_png.png";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,14 +17,6 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleMouseEnter = () => {
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsOpen(false);
-  };
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -34,8 +27,7 @@ const Profile = () => {
     <div className="relative">
       <button
         id="dropdown"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onClick={() => setIsOpen(true)}
         className="flex items-center rounded-xl px-6 text-sm font-medium leading-normal text-primary transition duration-150 ease-in-out "
         type="button"
       >
@@ -45,89 +37,93 @@ const Profile = () => {
           alt="user photo"
         />
       </button>
-      {isOpen && (
-        <div
-          id="dropdown"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="absolute z-50 -left-[100%] bg-white divide-y divide-gray-100  rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 transition-all duration-3000"
-        >
-          <div className="px-4 py-3 text-sm text-gray-900 dark:text-gray-10 lg:w-[240px] hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-            <Link
-              to="/"
-              className="flex flex-wrap justify-start items-center gap-4 font-semibold cursor-pointer"
-            >
-              <img
-                className="w-8 h-8 rounded-full object-cover hidden sm:block"
-                src={userSvg}
-                alt="user photo"
-              />
-              <p className="hover:font-bold dark:text-gray-200 ">
-                {currentUser.email.substring(
-                  0,
-                  currentUser.email.lastIndexOf("@")
-                )}
-              </p>
-            </Link>
-          </div>
-          <ul
-            className="py-2 text-sm"
-            aria-labelledby="dropdownAvatarNameButton"
+      <OutsideClickHandler
+        onOutsideClick={() => {
+          setIsOpen(false);
+        }}
+      >
+        {isOpen && (
+          <div
+            id="dropdown"
+            className="absolute z-50 -right-[0%] top-14 bg-white divide-y divide-gray-100  rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 transition-all duration-3000"
           >
-            <li>
+            <div className="px-4 py-3 text-sm text-gray-900 dark:text-gray-10 lg:w-[240px] hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
               <Link
-                to="/login/edit-profile"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                to="/"
+                className="flex flex-wrap justify-start items-center gap-4 font-semibold cursor-pointer"
               >
-                <div className="flex justify-start items-center gap-4 font-semibold">
-                  <CiEdit />
-                  <p className="hover:font-bold dark:text-gray-10">
-                    Edit Profile
-                  </p>
-                </div>
+                <img
+                  className="w-8 h-8 rounded-full object-cover hidden sm:block"
+                  src={userSvg}
+                  alt="user photo"
+                />
+                <p className="hover:font-bold dark:text-gray-200 ">
+                  {currentUser.email.substring(
+                    0,
+                    currentUser.email.lastIndexOf("@")
+                  )}
+                </p>
               </Link>
-            </li>
-            {currentUser.email === import.meta.env.VITE_ADMIN_EMAIL ? (
+            </div>
+            <ul
+              className="py-2 text-sm"
+              aria-labelledby="dropdownAvatarNameButton"
+            >
               <li>
                 <Link
-                  to="/admin/dashboard"
+                  to="/login/edit-profile"
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <div className="flex justify-start items-center gap-4 font-semibold">
-                    <MdOutlineDashboard />
-                    <p className="hover:font-bold dark:text-gray-200">
-                      Dashboard
+                    <CiEdit />
+                    <p className="hover:font-bold dark:text-gray-10">
+                      Edit Profile
                     </p>
                   </div>
                 </Link>
               </li>
-            ) : null}
+              {currentUser.email === import.meta.env.VITE_ADMIN_EMAIL ? (
+                <li>
+                  <Link
+                    to="/admin/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    <div className="flex justify-start items-center gap-4 font-semibold">
+                      <MdOutlineDashboard />
+                      <p className="hover:font-bold dark:text-gray-200">
+                        Dashboard
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              ) : null}
 
-            <li>
-              <Link
-                to="/"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <li>
+                <Link
+                  to="/"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <div className="flex justify-start items-center gap-4 font-semibold">
+                    <TbHelpSquareRounded />
+                    <p className="hover:font-bold dark:text-gray-200">Helps</p>
+                  </div>
+                </Link>
+              </li>
+            </ul>
+            <div className="py-2">
+              <button
+                onClick={handleSignOut}
+                className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
                 <div className="flex justify-start items-center gap-4 font-semibold">
-                  <TbHelpSquareRounded />
-                  <p className="hover:font-bold dark:text-gray-200">Helps</p>
+                  <CiLogout />
+                  <p className="hover:font-bold dark:text-gray-10">Sign Out</p>
                 </div>
-              </Link>
-            </li>
-          </ul>
-          <div className="py-2">
-            <button
-              onClick={handleSignOut}
-              className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              <div className="flex justify-start items-center gap-4 font-semibold">
-                <CiLogout />
-                <p className="hover:font-bold dark:text-gray-10">Sign Out</p>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </OutsideClickHandler>
     </div>
   );
 };

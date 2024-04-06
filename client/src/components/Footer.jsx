@@ -12,7 +12,7 @@ const FooterCom = () => {
   return (
     <Footer
       container
-      className="rounded-none border-2 border-black dark:border-none mt-10"
+      className="rounded-none border-2 border-shadow-sm dark:border-none mt-10"
     >
       <div className="w-full max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">

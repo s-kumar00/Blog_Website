@@ -19,7 +19,7 @@ const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    <Navbar className="border-b-2 justify-between items-center rounded-sm shadow-sm ">
+    <Navbar className="border-b-2 justify-between items-center rounded-b-sm shadow-sm">
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -54,7 +54,7 @@ const Header = () => {
       </div>
 
       {/* navbar for mobile and large screen */}
-      <Head_Navbar containerStyles={"hidden md:flex gap-x-10"} />
+      <Head_Navbar containerStyles={"hidden md:flex gap-x-10 "} />
       <Head_Navbar
         toggleMenu={toggleMenu}
         containerStyles={`${
@@ -68,11 +68,12 @@ const Header = () => {
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
-          className={`${
-            searchOpened
-              ? "fixed flex z-50 w-full right-[0%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000 lg:hidden md:hidden"
-              : "fixed flex z-50 w-full -left-[100%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000"
-          }`}
+          className="hidden sm:inline"
+          // className={`${
+          //   searchOpened
+          //     ? "fixed flex z-50 w-full right-[0%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000"
+          //     : "fixed flex z-50 w-full -left-[100%] top-14 p-2 bg-white rounded-md shadow-md dark:bg-gray-700 transition-all duration-3000"
+          // }`}
         />
       </form>
     </Navbar>
