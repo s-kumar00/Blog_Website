@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { TbHelpSquareRounded } from "react-icons/tb";
 import { CiLogout } from "react-icons/ci";
@@ -58,10 +58,11 @@ const Profile = () => {
                   alt="user photo"
                 />
                 <p className="hover:font-bold dark:text-gray-200 ">
-                  {currentUser.email.substring(
-                    0,
-                    currentUser.email.lastIndexOf("@")
-                  )}
+                  {currentUser &&
+                    currentUser.email.substring(
+                      0,
+                      currentUser.email.lastIndexOf("@")
+                    )}
                 </p>
               </Link>
             </div>
@@ -71,33 +72,17 @@ const Profile = () => {
             >
               <li>
                 <Link
-                  to="/login/edit-profile"
+                  to="/dashboard"
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <div className="flex justify-start items-center gap-4 font-semibold">
-                    <CiEdit />
+                    <MdOutlineDashboard />
                     <p className="hover:font-bold dark:text-gray-10">
-                      Edit Profile
+                      Dashboard
                     </p>
                   </div>
                 </Link>
               </li>
-              {currentUser.email === import.meta.env.VITE_ADMIN_EMAIL ? (
-                <li>
-                  <Link
-                    to="/admin/dashboard"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    <div className="flex justify-start items-center gap-4 font-semibold">
-                      <MdOutlineDashboard />
-                      <p className="hover:font-bold dark:text-gray-200">
-                        Dashboard
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-              ) : null}
-
               <li>
                 <Link
                   to="/"

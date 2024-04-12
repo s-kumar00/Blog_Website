@@ -6,6 +6,14 @@ const { generateOTP } = require("../OtpGenerate/sendOTP");
 const OTP = require("../Models/otpModel");
 const sendMail = require("../OtpGenerate/sendMail");
 
+exports.test = async (req, res) => {
+  try {
+    res.status(201).json({ message: "Test API is working successfully...!" });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
@@ -32,24 +40,29 @@ exports.login = async (req, res, next) => {
     const validUser = await UserModel.findOne({ email });
 
     if (!validUser) {
-      next(errorHandler(201, "User Not Found"));
+      return res.status(201).json({ message: "User Not Found", success: false });
     }
 
     const validPassword = bcrypt.compareSync(password, validUser.password);
 
     if (!validPassword) {
-      res.status(201).json({ message: "Invalid Password", success: false });
+      return res.status(201).json({ message: "Invalid Password", success: false });
     }
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: hashedPassword, ...rest } = validUser._doc;
-    const expiryDate = new Date(Date.now() + 10 * 3600000);
-    res
-      .status(201)
-      .cookie("access_token", token, { httpOnly: true, expires: expiryDate })
-      .json({ user: rest, message: "Login Success", success: true });
+    const expiry = new Date(Date.now() + 3600000);
+
+    return res
+    .cookie("access_token", token, {
+      expires: expiry, 
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({user:rest, message: "Logged in successfully 😊 👌" , success:true});
   } catch (error) {
-    next(errorHandler(500, error.message));
+    return next(error);
   }
 };
 
@@ -85,8 +98,7 @@ exports.emailVerification = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
-
+};
 
 exports.otpVerification = async (req, res, next) => {
   try {
@@ -99,7 +111,7 @@ exports.otpVerification = async (req, res, next) => {
     if (!otp) {
       res.status(201).json({ message: "Invalid OTP", alert: false });
     }
-    
+
     const { expireAt } = otp;
     if (Date.now() > expireAt) {
       await OTP.deleteOne({ email });
@@ -116,7 +128,7 @@ exports.otpVerification = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 exports.changePassword = async (req, res, next) => {
   try {
@@ -125,8 +137,10 @@ exports.changePassword = async (req, res, next) => {
     const hashPassword = await bcrypt.hashSync(password, 10);
     user.password = hashPassword;
     user.save();
-    res.status(201).json({ message: "password changed successfully", alert: true });
+    res
+      .status(201)
+      .json({ message: "password changed successfully", alert: true });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};

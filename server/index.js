@@ -6,10 +6,16 @@ app.use(express.json());
 require("dotenv").config();
 const userRouter = require("./router/user.router");
 const authRouter = require("./router/auth.router");
-// let server;
-app.use(cors(
-  origin = "*",
-));
+const jwt = require("jsonwebtoken");
+const cookiesParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+app.use(cookiesParser());
+app.use(bodyParser.json());
+
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 
 const start = async () => {
   try {
@@ -44,3 +50,46 @@ app.use((err, req, res, next) => {
     message,
   });
 })
+
+
+
+// const authorization = (req, res, next) => {
+//   const token = req.cookies.access_token;
+//   if (!token) {
+//     return res.sendStatus(403);
+//   }
+//   try {
+//     const data = jwt.verify(token, "YOUR_SECRET_KEY");
+//     req.userId = data.id;
+//     req.userRole = data.role;
+//     return next();
+//   } catch {
+//     return res.sendStatus(403);
+//   }
+// };
+
+// app.get("/", (req, res) => {
+//   return res.json({ message: "Hello World 🇵🇹 🤘" });
+// });
+
+// app.get("/login", (req, res) => {
+//   const token = jwt.sign({ id: 7, role: "captain" }, "YOUR_SECRET_KEY");
+//   return res
+//     .cookie("access_token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//     })
+//     .status(200)
+//     .json({ message: "Logged in successfully 😊 👌" });
+// });
+
+// app.get("/protected", authorization, (req, res) => {
+//   return res.json({ user: { id: req.userId, role: req.userRole } });
+// });
+
+// app.get("/logout", authorization, (req, res) => {
+//   return res
+//     .clearCookie("access_token")
+//     .status(200)
+//     .json({ message: "Successfully logged out 😏 🍀" });
+// });
