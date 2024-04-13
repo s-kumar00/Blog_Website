@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { signOut } from "../redux/userSlice";
+import { signOut, signInFailure } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -80,6 +80,7 @@ const DashProfile = () => {
         toast.success(response.data.message, toastOptions);
       } else {
         toast.error(response.data.message, toastOptions);
+        dispatch(signOut());
         dispatch(updateUserFailure(response.data.message));
       }
     } catch (error) {
@@ -128,11 +129,6 @@ const DashProfile = () => {
       dispatch(deleteUserFailure());
       toast.error(error.message, toastOptions);
     }
-  };
-
-  const handleSignOut = () => {
-    dispatch(signOut());
-    navigate("/login");
   };
 
   return (

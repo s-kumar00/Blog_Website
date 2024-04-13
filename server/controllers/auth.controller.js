@@ -14,6 +14,15 @@ exports.test = async (req, res) => {
   }
 };
 
+exports.signOut = async (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(201).json({ message: "User SignOut Successfully", success: true });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+}
+
 exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;

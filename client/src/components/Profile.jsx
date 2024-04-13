@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { CiEdit } from "react-icons/ci";
+import { Link } from "react-router-dom";
 import { TbHelpSquareRounded } from "react-icons/tb";
 import { CiLogout } from "react-icons/ci";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { signOut } from "../redux/userSlice";
+import { signOut, signInFailure } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import userSvg from "../asstes/user_png.png";
 import OutsideClickHandler from "react-outside-click-handler";
+import { signOutRoute } from "../Api/authApi";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +18,16 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    dispatch(signOut());
-    navigate("/");
+  const handleSignOut = async () => {
+    try {
+      const dataRes = await signOutRoute();
+      if (dataRes.data.success) {
+        dispatch(signOut());
+        navigate("/login");
+      }
+    } catch (error) {
+      dispatch(signInFailure(error.message));
+    }
   };
 
   return (

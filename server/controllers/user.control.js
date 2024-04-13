@@ -73,3 +73,4 @@ exports.updatePassword = async (req, res, next) => {
     next(error);
   }
 };
+

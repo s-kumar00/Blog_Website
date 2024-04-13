@@ -3,8 +3,9 @@ import { Sidebar } from "flowbite-react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signOut } from "../redux/userSlice";
+import { signOut, signInFailure } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import { signOutRoute } from "../Api/authApi";
 
 const DashboardSidebar = () => {
   const location = useLocation();
@@ -19,9 +20,16 @@ const DashboardSidebar = () => {
     }
   }, [location.search]);
 
-  const handleSignOut = () => {
-    dispatch(signOut());
-    navigate("/login");
+  const handleSignOut = async () => {
+    try {
+      const dataRes = await signOutRoute();
+      if (dataRes.data.success) {
+        dispatch(signOut());
+        navigate("/login");
+      }
+    } catch (error) {
+      dispatch(signInFailure(error.message));
+    }
   };
 
   return (
