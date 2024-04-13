@@ -69,11 +69,11 @@ const DashProfile = () => {
 
   const handleUSerUpdate = async (e) => {
     e.preventDefault();
+    const username = formData.username;
     try {
-      const response = await updateUserAccountRoute(
-        currentUser._id,
-        formData.username
-      );
+      const response = await updateUserAccountRoute(currentUser._id, {
+        username,
+      });
       if (response.data.success) {
         dispatch(updateUserSuccess(response.data.user));
         navigate("/dashboard");

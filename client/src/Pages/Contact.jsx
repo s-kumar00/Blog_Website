@@ -44,7 +44,7 @@ const Contact = () => {
 
           <div className="bg-white">
             <Link
-              href="mailto:loginbook123@gmail.com"
+              to="mailto:loginbook123@gmail.com"
               id="contact_btn"
               className="w-[10rem] h-[10rem] rounded-full text-[#000e17] grid place-items-center absolute lg:right-[40%] sm:right-[40%] xs:right-[30%] sm:top-[25%] top-[-10%] cursor-pointer [transition:all_400ms_ease] hover:shadow-2xl hover:shadow-gray-900 hover:-translate-y-[1rem] hover:text-[#000e17]"
             >
