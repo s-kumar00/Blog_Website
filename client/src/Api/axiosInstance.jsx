@@ -3,6 +3,7 @@ export const host = "http://localhost:8000";
 
 const axiosInstance = axios.create({
   baseURL: host,
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(

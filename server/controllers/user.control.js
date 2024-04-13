@@ -10,10 +10,6 @@ exports.test = async (req, res) => {
   }
 };
 
-exports.protected = async (req, res) => {
-  return res.json({ message: "Protected API is working successfully...!" });
-}
-
 exports.deleteUser = async (req, res, next) => {
   try {
     await UserModel.findByIdAndDelete(req.params.id);

@@ -57,7 +57,7 @@ exports.login = async (req, res, next) => {
     .cookie("access_token", token, {
       expires: expiry, 
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
     })
     .status(200)
     .json({user:rest, message: "Logged in successfully 😊 👌" , success:true});
@@ -65,7 +65,6 @@ exports.login = async (req, res, next) => {
     return next(error);
   }
 };
-
 
 exports.emailVerification = async (req, res, next) => {
   try {
