@@ -18,6 +18,14 @@ module.exports = {
         lg: "1024px",
         xl: "1280px",
       },
+      keyframes: {
+        spinText: {
+          to: { transform: 'rotate(360deg)'}
+        }
+      },
+      animation: {
+        spinText: 'spinText 30s linear infinite',
+      }
     },
   },
   plugins: [require("flowbite/plugin")],
