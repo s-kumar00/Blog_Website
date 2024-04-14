@@ -19,7 +19,7 @@ const Contact = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
+    <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8 ">
       <div className="max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
         <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-200">
           Contact
@@ -57,27 +57,25 @@ const Contact = () => {
         </div>
 
         {/* right side */}
-        <div>
-          <div className="max-w-full mx-auto rounded-lg overflow-hidden">
-            <div className="px-6 py-4">
-              <h3 className="text-lg font-bold text-gray-900">Our Address</h3>
-              <p className="mt-1 text-gray-600">
-                Nitw Campus, Warangal, Telangana, India, 506004
-              </p>
-            </div>
-            <div className="border-t border-gray-200 px-6 py-4">
-              <h3 className="text-lg font-bold text-gray-900">Hours</h3>
-              <p className="mt-1 text-gray-600">Monday - Friday: 9am - 5pm</p>
-              <p className="mt-1 text-gray-600">Saturday: 10am - 4pm</p>
-              <p className="mt-1 text-gray-600">Sunday: Closed</p>
-            </div>
-            <div className="border-t border-gray-200 px-6 py-4">
-              <h3 className="text-lg font-bold text-gray-900">Contact</h3>
-              <p className="mt-1 text-gray-600">
-                Email: loginbook123@example.com
-              </p>
-              <p className="mt-1 text-gray-600">Phone: +91 6206573315</p>
-            </div>
+        <div className="max-w-full mx-auto rounded-lg overflow-hidden text-gray-900 dark:text-gray-50">
+          <div className="px-6 py-4">
+            <h3 className="text-lg font-bold ">Our Address</h3>
+            <p className="mt-1 text-gray-400">
+              Nitw Campus, Warangal, Telangana, India, 506004
+            </p>
+          </div>
+          <div className="border-t border-gray-600 px-6 py-4">
+            <h3 className="text-lg font-bold ">Hours</h3>
+            <p className="mt-1 text-gray-400">Monday - Friday: 9am - 5pm</p>
+            <p className="mt-1 text-gray-400">Saturday: 10am - 4pm</p>
+            <p className="mt-1 text-gray-400">Sunday: Closed</p>
+          </div>
+          <div className="border-t border-gray-600 px-6 py-4">
+            <h3 className="text-lg font-bold ">Contact</h3>
+            <p className="mt-1 text-gray-400">
+              Email: loginbook123@example.com
+            </p>
+            <p className="mt-1 text-gray-400">Phone: +91 6206573315</p>
           </div>
         </div>
       </div>
@@ -86,3 +84,9 @@ const Contact = () => {
 };
 
 export default Contact;
+
+// access key
+// q033EokQwMal0-g4QqpenkjiLleUfGenB1UpiHBVPkQ
+
+// secret key
+// 1sfvGmeN6F26jyfi5zHldHyTSpUfmgOVsiBovBMF_vg
