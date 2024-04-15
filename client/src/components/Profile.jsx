@@ -34,7 +34,7 @@ const Profile = () => {
     <div className="relative">
       <button
         id="dropdown"
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
         className="flex items-center rounded-xl px-6 text-sm font-medium leading-normal text-primary transition duration-150 ease-in-out "
         type="button"
       >
@@ -57,6 +57,9 @@ const Profile = () => {
             <div className="px-4 py-3 text-sm text-gray-900 dark:text-gray-10 lg:w-[240px] hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
               <Link
                 to="/"
+                onClick={() => {
+                  setIsOpen(false);
+                }}
                 className="flex flex-wrap justify-start items-center gap-4 font-semibold cursor-pointer"
               >
                 <img
